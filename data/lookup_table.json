@@ -1,0 +1,466 @@
+{
+  "model": "meta-llama/Llama-3.1-8B-Instruct",
+  "min_split": 1,
+  "safety_margin_layers": 1,
+  "usable_fraction": 0.7,
+  "quality_levels": {
+    "strict": 0.05,
+    "balanced": 0.1,
+    "relaxed": 0.25
+  },
+  "selection": "p95 of KL over 300 WikiText passages",
+  "p95_kl": {
+    "0": {
+      "grouped(4,4,4)": 0.29929,
+      "grouped(8,4,4)": 0.01895,
+      "grouped(8,8,4)": 0.00447,
+      "grouped(8,8,8)": 0.00167
+    },
+    "1": {
+      "grouped(4,4,4)": 4.13609,
+      "grouped(8,4,4)": 0.71235,
+      "grouped(8,8,4)": 0.03117,
+      "grouped(8,8,8)": 0.01253
+    },
+    "2": {
+      "grouped(4,4,4)": 2.83991,
+      "grouped(8,4,4)": 0.21808,
+      "grouped(8,8,4)": 0.0139,
+      "grouped(8,8,8)": 0.00705
+    },
+    "3": {
+      "grouped(4,4,4)": 1.19049,
+      "grouped(8,4,4)": 0.14112,
+      "grouped(8,8,4)": 0.00735,
+      "grouped(8,8,8)": 0.00388
+    },
+    "4": {
+      "grouped(4,4,4)": 0.57365,
+      "grouped(8,4,4)": 0.07923,
+      "grouped(8,8,4)": 0.00495,
+      "grouped(8,8,8)": 0.00255
+    },
+    "5": {
+      "grouped(4,4,4)": 0.56326,
+      "grouped(8,4,4)": 0.05417,
+      "grouped(8,8,4)": 0.00348,
+      "grouped(8,8,8)": 0.00185
+    },
+    "6": {
+      "grouped(4,4,4)": 0.47576,
+      "grouped(8,4,4)": 0.03975,
+      "grouped(8,8,4)": 0.00295,
+      "grouped(8,8,8)": 0.0015
+    },
+    "7": {
+      "grouped(4,4,4)": 0.35716,
+      "grouped(8,4,4)": 0.03077,
+      "grouped(8,8,4)": 0.00254,
+      "grouped(8,8,8)": 0.00125
+    },
+    "8": {
+      "grouped(4,4,4)": 0.24741,
+      "grouped(8,4,4)": 0.02386,
+      "grouped(8,8,4)": 0.00242,
+      "grouped(8,8,8)": 0.00113
+    },
+    "9": {
+      "grouped(4,4,4)": 0.19739,
+      "grouped(8,4,4)": 0.02022,
+      "grouped(8,8,4)": 0.00232,
+      "grouped(8,8,8)": 0.00105
+    },
+    "10": {
+      "grouped(4,4,4)": 0.15572,
+      "grouped(8,4,4)": 0.01408,
+      "grouped(8,8,4)": 0.00216,
+      "grouped(8,8,8)": 0.00101
+    },
+    "11": {
+      "grouped(4,4,4)": 0.11696,
+      "grouped(8,4,4)": 0.01369,
+      "grouped(8,8,4)": 0.0022,
+      "grouped(8,8,8)": 0.00096
+    }
+  },
+  "mean_kl": {
+    "0": {
+      "grouped(4,4,4)": 0.12356,
+      "grouped(8,4,4)": 0.01029,
+      "grouped(8,8,4)": 0.00261,
+      "grouped(8,8,8)": 0.0011
+    },
+    "1": {
+      "grouped(4,4,4)": 3.26322,
+      "grouped(8,4,4)": 0.44334,
+      "grouped(8,8,4)": 0.01541,
+      "grouped(8,8,8)": 0.00687
+    },
+    "2": {
+      "grouped(4,4,4)": 2.13805,
+      "grouped(8,4,4)": 0.12997,
+      "grouped(8,8,4)": 0.00786,
+      "grouped(8,8,8)": 0.00402
+    },
+    "3": {
+      "grouped(4,4,4)": 0.822,
+      "grouped(8,4,4)": 0.08283,
+      "grouped(8,8,4)": 0.0045,
+      "grouped(8,8,8)": 0.00249
+    },
+    "4": {
+      "grouped(4,4,4)": 0.42128,
+      "grouped(8,4,4)": 0.04995,
+      "grouped(8,8,4)": 0.00331,
+      "grouped(8,8,8)": 0.0018
+    },
+    "5": {
+      "grouped(4,4,4)": 0.41511,
+      "grouped(8,4,4)": 0.0372,
+      "grouped(8,8,4)": 0.00258,
+      "grouped(8,8,8)": 0.00141
+    },
+    "6": {
+      "grouped(4,4,4)": 0.34929,
+      "grouped(8,4,4)": 0.02706,
+      "grouped(8,8,4)": 0.00221,
+      "grouped(8,8,8)": 0.00118
+    },
+    "7": {
+      "grouped(4,4,4)": 0.26321,
+      "grouped(8,4,4)": 0.02123,
+      "grouped(8,8,4)": 0.00195,
+      "grouped(8,8,8)": 0.00102
+    },
+    "8": {
+      "grouped(4,4,4)": 0.17506,
+      "grouped(8,4,4)": 0.01739,
+      "grouped(8,8,4)": 0.00187,
+      "grouped(8,8,8)": 0.00095
+    },
+    "9": {
+      "grouped(4,4,4)": 0.14844,
+      "grouped(8,4,4)": 0.01497,
+      "grouped(8,8,4)": 0.00182,
+      "grouped(8,8,8)": 0.0009
+    },
+    "10": {
+      "grouped(4,4,4)": 0.11348,
+      "grouped(8,4,4)": 0.01032,
+      "grouped(8,8,4)": 0.00175,
+      "grouped(8,8,8)": 0.00085
+    },
+    "11": {
+      "grouped(4,4,4)": 0.08908,
+      "grouped(8,4,4)": 0.00984,
+      "grouped(8,8,4)": 0.0017,
+      "grouped(8,8,8)": 0.00081
+    }
+  },
+  "scheme_bytes": {
+    "grouped(4,4,4)": {
+      "50": 102787.0,
+      "100": 205562.0,
+      "250": 513887.0
+    },
+    "grouped(8,4,4)": {
+      "50": 104462.0,
+      "100": 208912.0,
+      "250": 522262.0
+    },
+    "grouped(8,8,4)": {
+      "50": 135462.0,
+      "100": 270912.0,
+      "250": 677262.0
+    },
+    "grouped(8,8,8)": {
+      "50": 205062.0,
+      "100": 410112.0,
+      "250": 1025262.0
+    }
+  },
+  "decisions": {
+    "2.0_strict": {
+      "feasible": false,
+      "split": null,
+      "scheme": null,
+      "memory_ceiling": 0,
+      "binding_constraint": "memory",
+      "note": "no feasible split above the degenerate layer 0",
+      "recommendation": "send raw tokens; run entirely in the cloud"
+    },
+    "2.0_balanced": {
+      "feasible": false,
+      "split": null,
+      "scheme": null,
+      "memory_ceiling": 0,
+      "binding_constraint": "memory",
+      "note": "no feasible split above the degenerate layer 0",
+      "recommendation": "send raw tokens; run entirely in the cloud"
+    },
+    "2.0_relaxed": {
+      "feasible": false,
+      "split": null,
+      "scheme": null,
+      "memory_ceiling": 0,
+      "binding_constraint": "memory",
+      "note": "no feasible split above the degenerate layer 0",
+      "recommendation": "send raw tokens; run entirely in the cloud"
+    },
+    "4.0_strict": {
+      "feasible": true,
+      "split": 1,
+      "scheme": "grouped(8,8,4)",
+      "bytes": 270912.0,
+      "pct_of_fp16": 33.0703125,
+      "reduction_pct": 66.9296875,
+      "transfer_ms": 216.7296,
+      "p95_kl": 0.03117,
+      "mean_kl": 0.01541,
+      "memory_ceiling": 3,
+      "effective_cap": 2,
+      "layers_searched": 2,
+      "deepest_feasible": 2,
+      "layers_saved_vs_deepest": 1,
+      "binding_constraint": "memory"
+    },
+    "4.0_balanced": {
+      "feasible": true,
+      "split": 1,
+      "scheme": "grouped(8,8,4)",
+      "bytes": 270912.0,
+      "pct_of_fp16": 33.0703125,
+      "reduction_pct": 66.9296875,
+      "transfer_ms": 216.7296,
+      "p95_kl": 0.03117,
+      "mean_kl": 0.01541,
+      "memory_ceiling": 3,
+      "effective_cap": 2,
+      "layers_searched": 2,
+      "deepest_feasible": 2,
+      "layers_saved_vs_deepest": 1,
+      "binding_constraint": "memory"
+    },
+    "4.0_relaxed": {
+      "feasible": true,
+      "split": 2,
+      "scheme": "grouped(8,4,4)",
+      "bytes": 208912.0,
+      "pct_of_fp16": 25.501953125,
+      "reduction_pct": 74.498046875,
+      "transfer_ms": 167.12959999999998,
+      "p95_kl": 0.21808,
+      "mean_kl": 0.12997,
+      "memory_ceiling": 3,
+      "effective_cap": 2,
+      "layers_searched": 2,
+      "deepest_feasible": 2,
+      "layers_saved_vs_deepest": 0,
+      "binding_constraint": "memory"
+    },
+    "5.9_strict": {
+      "feasible": true,
+      "split": 1,
+      "scheme": "grouped(8,8,4)",
+      "bytes": 270912.0,
+      "pct_of_fp16": 33.0703125,
+      "reduction_pct": 66.9296875,
+      "transfer_ms": 216.7296,
+      "p95_kl": 0.03117,
+      "mean_kl": 0.01541,
+      "memory_ceiling": 6,
+      "effective_cap": 5,
+      "layers_searched": 5,
+      "deepest_feasible": 5,
+      "layers_saved_vs_deepest": 4,
+      "binding_constraint": "memory"
+    },
+    "5.9_balanced": {
+      "feasible": true,
+      "split": 4,
+      "scheme": "grouped(8,4,4)",
+      "bytes": 208912.0,
+      "pct_of_fp16": 25.501953125,
+      "reduction_pct": 74.498046875,
+      "transfer_ms": 167.12959999999998,
+      "p95_kl": 0.07923,
+      "mean_kl": 0.04995,
+      "memory_ceiling": 6,
+      "effective_cap": 5,
+      "layers_searched": 5,
+      "deepest_feasible": 5,
+      "layers_saved_vs_deepest": 1,
+      "binding_constraint": "memory"
+    },
+    "5.9_relaxed": {
+      "feasible": true,
+      "split": 2,
+      "scheme": "grouped(8,4,4)",
+      "bytes": 208912.0,
+      "pct_of_fp16": 25.501953125,
+      "reduction_pct": 74.498046875,
+      "transfer_ms": 167.12959999999998,
+      "p95_kl": 0.21808,
+      "mean_kl": 0.12997,
+      "memory_ceiling": 6,
+      "effective_cap": 5,
+      "layers_searched": 5,
+      "deepest_feasible": 5,
+      "layers_saved_vs_deepest": 3,
+      "binding_constraint": "memory"
+    },
+    "6.0_strict": {
+      "feasible": true,
+      "split": 1,
+      "scheme": "grouped(8,8,4)",
+      "bytes": 270912.0,
+      "pct_of_fp16": 33.0703125,
+      "reduction_pct": 66.9296875,
+      "transfer_ms": 216.7296,
+      "p95_kl": 0.03117,
+      "mean_kl": 0.01541,
+      "memory_ceiling": 6,
+      "effective_cap": 5,
+      "layers_searched": 5,
+      "deepest_feasible": 5,
+      "layers_saved_vs_deepest": 4,
+      "binding_constraint": "memory"
+    },
+    "6.0_balanced": {
+      "feasible": true,
+      "split": 4,
+      "scheme": "grouped(8,4,4)",
+      "bytes": 208912.0,
+      "pct_of_fp16": 25.501953125,
+      "reduction_pct": 74.498046875,
+      "transfer_ms": 167.12959999999998,
+      "p95_kl": 0.07923,
+      "mean_kl": 0.04995,
+      "memory_ceiling": 6,
+      "effective_cap": 5,
+      "layers_searched": 5,
+      "deepest_feasible": 5,
+      "layers_saved_vs_deepest": 1,
+      "binding_constraint": "memory"
+    },
+    "6.0_relaxed": {
+      "feasible": true,
+      "split": 2,
+      "scheme": "grouped(8,4,4)",
+      "bytes": 208912.0,
+      "pct_of_fp16": 25.501953125,
+      "reduction_pct": 74.498046875,
+      "transfer_ms": 167.12959999999998,
+      "p95_kl": 0.21808,
+      "mean_kl": 0.12997,
+      "memory_ceiling": 6,
+      "effective_cap": 5,
+      "layers_searched": 5,
+      "deepest_feasible": 5,
+      "layers_saved_vs_deepest": 3,
+      "binding_constraint": "memory"
+    },
+    "7.81_strict": {
+      "feasible": true,
+      "split": 6,
+      "scheme": "grouped(8,4,4)",
+      "bytes": 208912.0,
+      "pct_of_fp16": 25.501953125,
+      "reduction_pct": 74.498046875,
+      "transfer_ms": 167.12959999999998,
+      "p95_kl": 0.03975,
+      "mean_kl": 0.02706,
+      "memory_ceiling": 10,
+      "effective_cap": 9,
+      "layers_searched": 9,
+      "deepest_feasible": 9,
+      "layers_saved_vs_deepest": 3,
+      "binding_constraint": "memory"
+    },
+    "7.81_balanced": {
+      "feasible": true,
+      "split": 4,
+      "scheme": "grouped(8,4,4)",
+      "bytes": 208912.0,
+      "pct_of_fp16": 25.501953125,
+      "reduction_pct": 74.498046875,
+      "transfer_ms": 167.12959999999998,
+      "p95_kl": 0.07923,
+      "mean_kl": 0.04995,
+      "memory_ceiling": 10,
+      "effective_cap": 9,
+      "layers_searched": 9,
+      "deepest_feasible": 9,
+      "layers_saved_vs_deepest": 5,
+      "binding_constraint": "memory"
+    },
+    "7.81_relaxed": {
+      "feasible": true,
+      "split": 8,
+      "scheme": "grouped(4,4,4)",
+      "bytes": 205562.0,
+      "pct_of_fp16": 25.093017578125,
+      "reduction_pct": 74.906982421875,
+      "transfer_ms": 164.4496,
+      "p95_kl": 0.24741,
+      "mean_kl": 0.17506,
+      "memory_ceiling": 10,
+      "effective_cap": 9,
+      "layers_searched": 9,
+      "deepest_feasible": 9,
+      "layers_saved_vs_deepest": 1,
+      "binding_constraint": "memory"
+    },
+    "8.0_strict": {
+      "feasible": true,
+      "split": 6,
+      "scheme": "grouped(8,4,4)",
+      "bytes": 208912.0,
+      "pct_of_fp16": 25.501953125,
+      "reduction_pct": 74.498046875,
+      "transfer_ms": 167.12959999999998,
+      "p95_kl": 0.03975,
+      "mean_kl": 0.02706,
+      "memory_ceiling": 10,
+      "effective_cap": 9,
+      "layers_searched": 9,
+      "deepest_feasible": 9,
+      "layers_saved_vs_deepest": 3,
+      "binding_constraint": "memory"
+    },
+    "8.0_balanced": {
+      "feasible": true,
+      "split": 4,
+      "scheme": "grouped(8,4,4)",
+      "bytes": 208912.0,
+      "pct_of_fp16": 25.501953125,
+      "reduction_pct": 74.498046875,
+      "transfer_ms": 167.12959999999998,
+      "p95_kl": 0.07923,
+      "mean_kl": 0.04995,
+      "memory_ceiling": 10,
+      "effective_cap": 9,
+      "layers_searched": 9,
+      "deepest_feasible": 9,
+      "layers_saved_vs_deepest": 5,
+      "binding_constraint": "memory"
+    },
+    "8.0_relaxed": {
+      "feasible": true,
+      "split": 8,
+      "scheme": "grouped(4,4,4)",
+      "bytes": 205562.0,
+      "pct_of_fp16": 25.093017578125,
+      "reduction_pct": 74.906982421875,
+      "transfer_ms": 164.4496,
+      "p95_kl": 0.24741,
+      "mean_kl": 0.17506,
+      "memory_ceiling": 10,
+      "effective_cap": 9,
+      "layers_searched": 9,
+      "deepest_feasible": 9,
+      "layers_saved_vs_deepest": 1,
+      "binding_constraint": "memory"
+    }
+  }
+}

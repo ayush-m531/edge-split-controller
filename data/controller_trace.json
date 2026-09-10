@@ -1,0 +1,881 @@
+{
+  "per_request_budgets": {
+    "strict": {
+      "feasible": true,
+      "split": 6,
+      "scheme": "grouped(8,4,4)",
+      "bytes": 208912.0,
+      "pct_of_fp16": 25.501953125,
+      "reduction_pct": 74.498046875,
+      "transfer_ms": 33.42592,
+      "p95_kl": 0.03975,
+      "mean_kl": 0.02706,
+      "memory_ceiling": 10,
+      "effective_cap": 9,
+      "layers_searched": 9,
+      "deepest_feasible": 9,
+      "layers_saved_vs_deepest": 3,
+      "binding_constraint": "memory"
+    },
+    "balanced": {
+      "feasible": true,
+      "split": 4,
+      "scheme": "grouped(8,4,4)",
+      "bytes": 208912.0,
+      "pct_of_fp16": 25.501953125,
+      "reduction_pct": 74.498046875,
+      "transfer_ms": 33.42592,
+      "p95_kl": 0.07923,
+      "mean_kl": 0.04995,
+      "memory_ceiling": 10,
+      "effective_cap": 9,
+      "layers_searched": 9,
+      "deepest_feasible": 9,
+      "layers_saved_vs_deepest": 5,
+      "binding_constraint": "memory"
+    },
+    "relaxed": {
+      "feasible": true,
+      "split": 8,
+      "scheme": "grouped(4,4,4)",
+      "bytes": 205562.0,
+      "pct_of_fp16": 25.093017578125,
+      "reduction_pct": 74.906982421875,
+      "transfer_ms": 32.889920000000004,
+      "p95_kl": 0.24741,
+      "mean_kl": 0.17506,
+      "memory_ceiling": 10,
+      "effective_cap": 9,
+      "layers_searched": 9,
+      "deepest_feasible": 9,
+      "layers_saved_vs_deepest": 1,
+      "binding_constraint": "memory"
+    }
+  },
+  "scenario": [
+    {
+      "label": "cold start, idle wifi",
+      "free_gb": 7.81,
+      "bw_mbps": 50,
+      "battery_pct": 95,
+      "temp_c": 38,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "user opens more apps",
+      "free_gb": 5.9,
+      "bw_mbps": 50,
+      "battery_pct": 90,
+      "temp_c": 40,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "moves to mobile data",
+      "free_gb": 5.9,
+      "bw_mbps": 10,
+      "battery_pct": 88,
+      "temp_c": 41,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "weak signal",
+      "free_gb": 5.9,
+      "bw_mbps": 1,
+      "battery_pct": 86,
+      "temp_c": 42,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "stable",
+      "free_gb": 5.9,
+      "bw_mbps": 1,
+      "battery_pct": 84,
+      "temp_c": 43,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "stable",
+      "free_gb": 5.9,
+      "bw_mbps": 1,
+      "battery_pct": 82,
+      "temp_c": 43,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "sustained load, heating",
+      "free_gb": 5.9,
+      "bw_mbps": 1,
+      "battery_pct": 79,
+      "temp_c": 63,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "thermal limit reached",
+      "free_gb": 5.9,
+      "bw_mbps": 1,
+      "battery_pct": 76,
+      "temp_c": 84,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "cools, network recovers",
+      "free_gb": 5.9,
+      "bw_mbps": 10,
+      "battery_pct": 73,
+      "temp_c": 55,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "closes background apps",
+      "free_gb": 7.81,
+      "bw_mbps": 10,
+      "battery_pct": 70,
+      "temp_c": 48,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "memory hovering (a)",
+      "free_gb": 6.4,
+      "bw_mbps": 10,
+      "battery_pct": 68,
+      "temp_c": 47,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "memory hovering (b)",
+      "free_gb": 6.55,
+      "bw_mbps": 10,
+      "battery_pct": 67,
+      "temp_c": 47,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "memory hovering (c)",
+      "free_gb": 6.4,
+      "bw_mbps": 10,
+      "battery_pct": 66,
+      "temp_c": 47,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "memory hovering (d)",
+      "free_gb": 6.55,
+      "bw_mbps": 10,
+      "battery_pct": 65,
+      "temp_c": 47,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "battery falling",
+      "free_gb": 7.81,
+      "bw_mbps": 10,
+      "battery_pct": 24,
+      "temp_c": 46,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "battery critical",
+      "free_gb": 7.81,
+      "bw_mbps": 10,
+      "battery_pct": 14,
+      "temp_c": 45,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "critical battery AND hot",
+      "free_gb": 7.81,
+      "bw_mbps": 10,
+      "battery_pct": 12,
+      "temp_c": 86,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "plugged in, back on wifi",
+      "free_gb": 7.81,
+      "bw_mbps": 50,
+      "battery_pct": 31,
+      "temp_c": 40,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "heavy multitasking",
+      "free_gb": 4.0,
+      "bw_mbps": 50,
+      "battery_pct": 45,
+      "temp_c": 44,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "memory exhausted",
+      "free_gb": 2.0,
+      "bw_mbps": 50,
+      "battery_pct": 50,
+      "temp_c": 44,
+      "quality": "strict",
+      "seq_len": 100
+    },
+    {
+      "label": "recovers",
+      "free_gb": 7.81,
+      "bw_mbps": 50,
+      "battery_pct": 60,
+      "temp_c": 40,
+      "quality": "strict",
+      "seq_len": 100
+    }
+  ],
+  "history": [
+    {
+      "step": 1,
+      "label": "cold start, idle wifi",
+      "conditions": {
+        "free_gb": 7.81,
+        "bw_mbps": 50,
+        "battery_pct": 95,
+        "temp_c": 38,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 6,
+        "scheme": "grouped(8,4,4)",
+        "bytes": 208912.0,
+        "pct_of_fp16": 25.501953125,
+        "reduction_pct": 74.498046875,
+        "transfer_ms": 33.42592,
+        "p95_kl": 0.03975,
+        "mean_kl": 0.02706,
+        "memory_ceiling": 10,
+        "effective_cap": 9,
+        "layers_searched": 9,
+        "deepest_feasible": 9,
+        "layers_saved_vs_deepest": 3,
+        "binding_constraint": "memory"
+      },
+      "changed": true
+    },
+    {
+      "step": 2,
+      "label": "user opens more apps",
+      "conditions": {
+        "free_gb": 5.9,
+        "bw_mbps": 50,
+        "battery_pct": 90,
+        "temp_c": 40,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 1,
+        "scheme": "grouped(8,8,4)",
+        "bytes": 270912.0,
+        "pct_of_fp16": 33.0703125,
+        "reduction_pct": 66.9296875,
+        "transfer_ms": 43.34592,
+        "p95_kl": 0.03117,
+        "mean_kl": 0.01541,
+        "memory_ceiling": 6,
+        "effective_cap": 5,
+        "layers_searched": 5,
+        "deepest_feasible": 5,
+        "layers_saved_vs_deepest": 4,
+        "binding_constraint": "memory"
+      },
+      "changed": true
+    },
+    {
+      "step": 3,
+      "label": "moves to mobile data",
+      "conditions": {
+        "free_gb": 5.9,
+        "bw_mbps": 10,
+        "battery_pct": 88,
+        "temp_c": 41,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 1,
+        "scheme": "grouped(8,8,4)",
+        "bytes": 270912.0,
+        "pct_of_fp16": 33.0703125,
+        "reduction_pct": 66.9296875,
+        "transfer_ms": 216.7296,
+        "p95_kl": 0.03117,
+        "mean_kl": 0.01541,
+        "memory_ceiling": 6,
+        "effective_cap": 5,
+        "layers_searched": 5,
+        "deepest_feasible": 5,
+        "layers_saved_vs_deepest": 4,
+        "binding_constraint": "memory"
+      },
+      "changed": false
+    },
+    {
+      "step": 4,
+      "label": "weak signal",
+      "conditions": {
+        "free_gb": 5.9,
+        "bw_mbps": 1,
+        "battery_pct": 86,
+        "temp_c": 42,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 1,
+        "scheme": "grouped(8,8,4)",
+        "bytes": 270912.0,
+        "pct_of_fp16": 33.0703125,
+        "reduction_pct": 66.9296875,
+        "transfer_ms": 2167.296,
+        "p95_kl": 0.03117,
+        "mean_kl": 0.01541,
+        "memory_ceiling": 6,
+        "effective_cap": 5,
+        "layers_searched": 5,
+        "deepest_feasible": 5,
+        "layers_saved_vs_deepest": 4,
+        "binding_constraint": "memory"
+      },
+      "changed": false
+    },
+    {
+      "step": 5,
+      "label": "stable",
+      "conditions": {
+        "free_gb": 5.9,
+        "bw_mbps": 1,
+        "battery_pct": 84,
+        "temp_c": 43,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 1,
+        "scheme": "grouped(8,8,4)",
+        "bytes": 270912.0,
+        "pct_of_fp16": 33.0703125,
+        "reduction_pct": 66.9296875,
+        "transfer_ms": 2167.296,
+        "p95_kl": 0.03117,
+        "mean_kl": 0.01541,
+        "memory_ceiling": 6,
+        "effective_cap": 5,
+        "layers_searched": 5,
+        "deepest_feasible": 5,
+        "layers_saved_vs_deepest": 4,
+        "binding_constraint": "memory"
+      },
+      "changed": false
+    },
+    {
+      "step": 6,
+      "label": "stable",
+      "conditions": {
+        "free_gb": 5.9,
+        "bw_mbps": 1,
+        "battery_pct": 82,
+        "temp_c": 43,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 1,
+        "scheme": "grouped(8,8,4)",
+        "bytes": 270912.0,
+        "pct_of_fp16": 33.0703125,
+        "reduction_pct": 66.9296875,
+        "transfer_ms": 2167.296,
+        "p95_kl": 0.03117,
+        "mean_kl": 0.01541,
+        "memory_ceiling": 6,
+        "effective_cap": 5,
+        "layers_searched": 5,
+        "deepest_feasible": 5,
+        "layers_saved_vs_deepest": 4,
+        "binding_constraint": "memory"
+      },
+      "changed": false
+    },
+    {
+      "step": 7,
+      "label": "sustained load, heating",
+      "conditions": {
+        "free_gb": 5.9,
+        "bw_mbps": 1,
+        "battery_pct": 79,
+        "temp_c": 63,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 1,
+        "scheme": "grouped(8,8,4)",
+        "bytes": 270912.0,
+        "pct_of_fp16": 33.0703125,
+        "reduction_pct": 66.9296875,
+        "transfer_ms": 2167.296,
+        "p95_kl": 0.03117,
+        "mean_kl": 0.01541,
+        "memory_ceiling": 6,
+        "effective_cap": 5,
+        "layers_searched": 5,
+        "deepest_feasible": 5,
+        "layers_saved_vs_deepest": 4,
+        "binding_constraint": "memory"
+      },
+      "changed": false
+    },
+    {
+      "step": 8,
+      "label": "thermal limit reached",
+      "conditions": {
+        "free_gb": 5.9,
+        "bw_mbps": 1,
+        "battery_pct": 76,
+        "temp_c": 84,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 1,
+        "scheme": "grouped(8,8,4)",
+        "bytes": 270912.0,
+        "pct_of_fp16": 33.0703125,
+        "reduction_pct": 66.9296875,
+        "transfer_ms": 2167.296,
+        "p95_kl": 0.03117,
+        "mean_kl": 0.01541,
+        "memory_ceiling": 6,
+        "effective_cap": 1,
+        "layers_searched": 1,
+        "deepest_feasible": 1,
+        "layers_saved_vs_deepest": 0,
+        "binding_constraint": "thermal"
+      },
+      "changed": false
+    },
+    {
+      "step": 9,
+      "label": "cools, network recovers",
+      "conditions": {
+        "free_gb": 5.9,
+        "bw_mbps": 10,
+        "battery_pct": 73,
+        "temp_c": 55,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 1,
+        "scheme": "grouped(8,8,4)",
+        "bytes": 270912.0,
+        "pct_of_fp16": 33.0703125,
+        "reduction_pct": 66.9296875,
+        "transfer_ms": 216.7296,
+        "p95_kl": 0.03117,
+        "mean_kl": 0.01541,
+        "memory_ceiling": 6,
+        "effective_cap": 5,
+        "layers_searched": 5,
+        "deepest_feasible": 5,
+        "layers_saved_vs_deepest": 4,
+        "binding_constraint": "memory"
+      },
+      "changed": false
+    },
+    {
+      "step": 10,
+      "label": "closes background apps",
+      "conditions": {
+        "free_gb": 7.81,
+        "bw_mbps": 10,
+        "battery_pct": 70,
+        "temp_c": 48,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 6,
+        "scheme": "grouped(8,4,4)",
+        "bytes": 208912.0,
+        "pct_of_fp16": 25.501953125,
+        "reduction_pct": 74.498046875,
+        "transfer_ms": 167.12959999999998,
+        "p95_kl": 0.03975,
+        "mean_kl": 0.02706,
+        "memory_ceiling": 10,
+        "effective_cap": 9,
+        "layers_searched": 9,
+        "deepest_feasible": 9,
+        "layers_saved_vs_deepest": 3,
+        "binding_constraint": "memory"
+      },
+      "changed": true
+    },
+    {
+      "step": 11,
+      "label": "memory hovering (a)",
+      "conditions": {
+        "free_gb": 6.4,
+        "bw_mbps": 10,
+        "battery_pct": 68,
+        "temp_c": 47,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 6,
+        "scheme": "grouped(8,4,4)",
+        "bytes": 208912.0,
+        "pct_of_fp16": 25.501953125,
+        "reduction_pct": 74.498046875,
+        "transfer_ms": 167.12959999999998,
+        "p95_kl": 0.03975,
+        "mean_kl": 0.02706,
+        "memory_ceiling": 7,
+        "effective_cap": 6,
+        "layers_searched": 6,
+        "deepest_feasible": 6,
+        "layers_saved_vs_deepest": 0,
+        "binding_constraint": "memory"
+      },
+      "changed": false
+    },
+    {
+      "step": 12,
+      "label": "memory hovering (b)",
+      "conditions": {
+        "free_gb": 6.55,
+        "bw_mbps": 10,
+        "battery_pct": 67,
+        "temp_c": 47,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 6,
+        "scheme": "grouped(8,4,4)",
+        "bytes": 208912.0,
+        "pct_of_fp16": 25.501953125,
+        "reduction_pct": 74.498046875,
+        "transfer_ms": 167.12959999999998,
+        "p95_kl": 0.03975,
+        "mean_kl": 0.02706,
+        "memory_ceiling": 7,
+        "effective_cap": 6,
+        "layers_searched": 6,
+        "deepest_feasible": 6,
+        "layers_saved_vs_deepest": 0,
+        "binding_constraint": "memory"
+      },
+      "changed": false
+    },
+    {
+      "step": 13,
+      "label": "memory hovering (c)",
+      "conditions": {
+        "free_gb": 6.4,
+        "bw_mbps": 10,
+        "battery_pct": 66,
+        "temp_c": 47,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 6,
+        "scheme": "grouped(8,4,4)",
+        "bytes": 208912.0,
+        "pct_of_fp16": 25.501953125,
+        "reduction_pct": 74.498046875,
+        "transfer_ms": 167.12959999999998,
+        "p95_kl": 0.03975,
+        "mean_kl": 0.02706,
+        "memory_ceiling": 7,
+        "effective_cap": 6,
+        "layers_searched": 6,
+        "deepest_feasible": 6,
+        "layers_saved_vs_deepest": 0,
+        "binding_constraint": "memory"
+      },
+      "changed": false
+    },
+    {
+      "step": 14,
+      "label": "memory hovering (d)",
+      "conditions": {
+        "free_gb": 6.55,
+        "bw_mbps": 10,
+        "battery_pct": 65,
+        "temp_c": 47,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 6,
+        "scheme": "grouped(8,4,4)",
+        "bytes": 208912.0,
+        "pct_of_fp16": 25.501953125,
+        "reduction_pct": 74.498046875,
+        "transfer_ms": 167.12959999999998,
+        "p95_kl": 0.03975,
+        "mean_kl": 0.02706,
+        "memory_ceiling": 7,
+        "effective_cap": 6,
+        "layers_searched": 6,
+        "deepest_feasible": 6,
+        "layers_saved_vs_deepest": 0,
+        "binding_constraint": "memory"
+      },
+      "changed": false
+    },
+    {
+      "step": 15,
+      "label": "battery falling",
+      "conditions": {
+        "free_gb": 7.81,
+        "bw_mbps": 10,
+        "battery_pct": 24,
+        "temp_c": 46,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 6,
+        "scheme": "grouped(8,4,4)",
+        "bytes": 208912.0,
+        "pct_of_fp16": 25.501953125,
+        "reduction_pct": 74.498046875,
+        "transfer_ms": 167.12959999999998,
+        "p95_kl": 0.03975,
+        "mean_kl": 0.02706,
+        "memory_ceiling": 10,
+        "effective_cap": 9,
+        "layers_searched": 9,
+        "deepest_feasible": 9,
+        "layers_saved_vs_deepest": 3,
+        "binding_constraint": "memory"
+      },
+      "changed": false
+    },
+    {
+      "step": 16,
+      "label": "battery critical",
+      "conditions": {
+        "free_gb": 7.81,
+        "bw_mbps": 10,
+        "battery_pct": 14,
+        "temp_c": 45,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 1,
+        "scheme": "grouped(8,8,4)",
+        "bytes": 270912.0,
+        "pct_of_fp16": 33.0703125,
+        "reduction_pct": 66.9296875,
+        "transfer_ms": 216.7296,
+        "p95_kl": 0.03117,
+        "mean_kl": 0.01541,
+        "memory_ceiling": 10,
+        "effective_cap": 1,
+        "layers_searched": 1,
+        "deepest_feasible": 1,
+        "layers_saved_vs_deepest": 0,
+        "binding_constraint": "battery"
+      },
+      "changed": true
+    },
+    {
+      "step": 17,
+      "label": "critical battery AND hot",
+      "conditions": {
+        "free_gb": 7.81,
+        "bw_mbps": 10,
+        "battery_pct": 12,
+        "temp_c": 86,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 1,
+        "scheme": "grouped(8,8,4)",
+        "bytes": 270912.0,
+        "pct_of_fp16": 33.0703125,
+        "reduction_pct": 66.9296875,
+        "transfer_ms": 216.7296,
+        "p95_kl": 0.03117,
+        "mean_kl": 0.01541,
+        "memory_ceiling": 10,
+        "effective_cap": 1,
+        "layers_searched": 1,
+        "deepest_feasible": 1,
+        "layers_saved_vs_deepest": 0,
+        "binding_constraint": "battery"
+      },
+      "changed": false
+    },
+    {
+      "step": 18,
+      "label": "plugged in, back on wifi",
+      "conditions": {
+        "free_gb": 7.81,
+        "bw_mbps": 50,
+        "battery_pct": 31,
+        "temp_c": 40,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 6,
+        "scheme": "grouped(8,4,4)",
+        "bytes": 208912.0,
+        "pct_of_fp16": 25.501953125,
+        "reduction_pct": 74.498046875,
+        "transfer_ms": 33.42592,
+        "p95_kl": 0.03975,
+        "mean_kl": 0.02706,
+        "memory_ceiling": 10,
+        "effective_cap": 9,
+        "layers_searched": 9,
+        "deepest_feasible": 9,
+        "layers_saved_vs_deepest": 3,
+        "binding_constraint": "memory"
+      },
+      "changed": true
+    },
+    {
+      "step": 19,
+      "label": "heavy multitasking",
+      "conditions": {
+        "free_gb": 4.0,
+        "bw_mbps": 50,
+        "battery_pct": 45,
+        "temp_c": 44,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 1,
+        "scheme": "grouped(8,8,4)",
+        "bytes": 270912.0,
+        "pct_of_fp16": 33.0703125,
+        "reduction_pct": 66.9296875,
+        "transfer_ms": 43.34592,
+        "p95_kl": 0.03117,
+        "mean_kl": 0.01541,
+        "memory_ceiling": 3,
+        "effective_cap": 2,
+        "layers_searched": 2,
+        "deepest_feasible": 2,
+        "layers_saved_vs_deepest": 1,
+        "binding_constraint": "memory"
+      },
+      "changed": true
+    },
+    {
+      "step": 20,
+      "label": "memory exhausted",
+      "conditions": {
+        "free_gb": 2.0,
+        "bw_mbps": 50,
+        "battery_pct": 50,
+        "temp_c": 44,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": false,
+        "split": null,
+        "scheme": null,
+        "memory_ceiling": 0,
+        "binding_constraint": "memory",
+        "note": "no feasible split above the degenerate layer 0",
+        "recommendation": "send raw tokens; run entirely in the cloud"
+      },
+      "changed": true
+    },
+    {
+      "step": 21,
+      "label": "recovers",
+      "conditions": {
+        "free_gb": 7.81,
+        "bw_mbps": 50,
+        "battery_pct": 60,
+        "temp_c": 40,
+        "quality": "strict",
+        "seq_len": 100
+      },
+      "decision": {
+        "feasible": true,
+        "split": 6,
+        "scheme": "grouped(8,4,4)",
+        "bytes": 208912.0,
+        "pct_of_fp16": 25.501953125,
+        "reduction_pct": 74.498046875,
+        "transfer_ms": 33.42592,
+        "p95_kl": 0.03975,
+        "mean_kl": 0.02706,
+        "memory_ceiling": 10,
+        "effective_cap": 9,
+        "layers_searched": 9,
+        "deepest_feasible": 9,
+        "layers_saved_vs_deepest": 3,
+        "binding_constraint": "memory"
+      },
+      "changed": true
+    }
+  ],
+  "summary": {
+    "decisions": 21,
+    "reconfigurations": 8,
+    "reconfiguration_rate": 0.38095238095238093
+  },
+  "configurations_visited": {
+    "L6 grouped(8,4,4)": 9,
+    "L1 grouped(8,8,4)": 11,
+    "cloud only": 1
+  },
+  "oscillation_flips": 0
+}

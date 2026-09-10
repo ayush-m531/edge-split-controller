@@ -1,0 +1,185 @@
+========================================================================================================
+ADAPTIVE SPLIT-INFERENCE CONTROLLER
+========================================================================================================
+REAL      : the memory ceiling (from Llama 3.1 8B parameter counts),
+            the p95 quality table (300 WikiText passages), byte costs,
+            and the decision logic itself.
+SIMULATED : the condition stream. Bandwidth, free RAM, battery and
+            temperature are fed from a scenario rather than read from
+            hardware. Reading them live needs a physical device and
+            is future work.
+
+========================================================================================================
+A. QUALITY BUDGET: SET ONCE PER REQUEST, NOT ADAPTED
+========================================================================================================
+The budget is a property of the REQUEST, not of the session. The
+application declares it when the request is submitted and it holds
+for that inference - the split is chosen from it and the edge loads
+layers accordingly, so it cannot change partway through.
+
+It is a user-facing knob because per-input quality cost cannot be
+predicted from the activation (tested five ways; strongest
+correlation 0.446, mean held-out R2 of a learned model 0.000). The
+system cannot infer how much a request matters, so the application
+states it.
+
+Three separate requests, identical device conditions:
+
+                     request   budget                                        decision
+--------------------------------------------------------------------------------------------------------
+              strict request     0.05  L6  grouped(8,4,4)   208912B     33.4ms    memory
+            balanced request     0.10  L4  grouped(8,4,4)   208912B     33.4ms    memory
+             relaxed request     0.25  L8  grouped(4,4,4)   205562B     32.9ms    memory
+
+  Three budgets, three different splits, two different schemes.
+  Within any one request the budget is FIXED; only device conditions
+  vary, which is what section B traces.
+
+========================================================================================================
+B. DEVICE CONDITIONS: ADAPTED WITHIN A SESSION
+========================================================================================================
+Budget held at 'strict' throughout, so every reconfiguration is
+attributable to device conditions alone.
+
+step                      event                                  conditions
+                                                                   decision
+--------------------------------------------------------------------------------------------------------
+   1      cold start, idle wifi       RAM 7.81GB |  50Mbps | bat  95% | 38C
+   *                             L6  grouped(8,4,4)   208912B     33.4ms    memory
+   2       user opens more apps       RAM 5.90GB |  50Mbps | bat  90% | 40C
+   *                             L1  grouped(8,8,4)   270912B     43.3ms    memory
+   3       moves to mobile data       RAM 5.90GB |  10Mbps | bat  88% | 41C
+                                 L1  grouped(8,8,4)   270912B    216.7ms    memory
+   4                weak signal       RAM 5.90GB |   1Mbps | bat  86% | 42C
+                                 L1  grouped(8,8,4)   270912B   2167.3ms    memory
+   5                     stable       RAM 5.90GB |   1Mbps | bat  84% | 43C
+                                 L1  grouped(8,8,4)   270912B   2167.3ms    memory
+   6                     stable       RAM 5.90GB |   1Mbps | bat  82% | 43C
+                                 L1  grouped(8,8,4)   270912B   2167.3ms    memory
+   7    sustained load, heating       RAM 5.90GB |   1Mbps | bat  79% | 63C
+                                 L1  grouped(8,8,4)   270912B   2167.3ms    memory
+   8      thermal limit reached       RAM 5.90GB |   1Mbps | bat  76% | 84C
+                                 L1  grouped(8,8,4)   270912B   2167.3ms   thermal
+   9    cools, network recovers       RAM 5.90GB |  10Mbps | bat  73% | 55C
+                                 L1  grouped(8,8,4)   270912B    216.7ms    memory
+  10     closes background apps       RAM 7.81GB |  10Mbps | bat  70% | 48C
+   *                             L6  grouped(8,4,4)   208912B    167.1ms    memory
+  11        memory hovering (a)       RAM 6.40GB |  10Mbps | bat  68% | 47C
+                                 L6  grouped(8,4,4)   208912B    167.1ms    memory
+  12        memory hovering (b)       RAM 6.55GB |  10Mbps | bat  67% | 47C
+                                 L6  grouped(8,4,4)   208912B    167.1ms    memory
+  13        memory hovering (c)       RAM 6.40GB |  10Mbps | bat  66% | 47C
+                                 L6  grouped(8,4,4)   208912B    167.1ms    memory
+  14        memory hovering (d)       RAM 6.55GB |  10Mbps | bat  65% | 47C
+                                 L6  grouped(8,4,4)   208912B    167.1ms    memory
+  15            battery falling       RAM 7.81GB |  10Mbps | bat  24% | 46C
+                                 L6  grouped(8,4,4)   208912B    167.1ms    memory
+  16           battery critical       RAM 7.81GB |  10Mbps | bat  14% | 45C
+   *                             L1  grouped(8,8,4)   270912B    216.7ms   battery
+  17   critical battery AND hot       RAM 7.81GB |  10Mbps | bat  12% | 86C
+                                 L1  grouped(8,8,4)   270912B    216.7ms   battery
+  18   plugged in, back on wifi       RAM 7.81GB |  50Mbps | bat  31% | 40C
+   *                             L6  grouped(8,4,4)   208912B     33.4ms    memory
+  19         heavy multitasking       RAM 4.00GB |  50Mbps | bat  45% | 44C
+   *                             L1  grouped(8,8,4)   270912B     43.3ms    memory
+  20           memory exhausted       RAM 2.00GB |  50Mbps | bat  50% | 44C
+   *                                                   CLOUD ONLY    memory
+  21                   recovers       RAM 7.81GB |  50Mbps | bat  60% | 40C
+   *                             L6  grouped(8,4,4)   208912B     33.4ms    memory
+
+  * = the decision CHANGED and the system reconfigured
+
+========================================================================================================
+SUMMARY
+========================================================================================================
+  decisions evaluated : 21
+  reconfigurations    : 8
+  reconfiguration rate: 38%
+
+  Without hysteresis the controller would reconfigure on every
+  reading - 21 times rather than 8. Each reconfiguration means
+  the edge loads or drops layer weights (416 MB per layer at bf16),
+  so suppressing unchanged decisions is not cosmetic.
+
+========================================================================================================
+CONFIGURATIONS VISITED IN THE SESSION
+========================================================================================================
+           L1 grouped(8,8,4) : 11 steps
+           L6 grouped(8,4,4) :  9 steps
+                  cloud only :  1 steps
+
+  Fewer distinct configurations than section A shows, because the
+  budget is fixed here. L4 and L8 appear only under a different
+  per-request budget, not through adaptation.
+
+========================================================================================================
+WHAT DROVE EACH RECONFIGURATION
+========================================================================================================
+  step  1      cold start, idle wifi: initial configuration
+  step  2       user opens more apps: L6 grouped(8,4,4) -> L1 grouped(8,8,4)  (+62000 B)
+                                   binding: memory
+  step 10     closes background apps: L1 grouped(8,8,4) -> L6 grouped(8,4,4)  (-62000 B)
+                                   binding: memory
+  step 16           battery critical: L6 grouped(8,4,4) -> L1 grouped(8,8,4)  (+62000 B)
+                                   binding: battery
+  step 18   plugged in, back on wifi: L1 grouped(8,8,4) -> L6 grouped(8,4,4)  (-62000 B)
+                                   binding: memory
+  step 19         heavy multitasking: L6 grouped(8,4,4) -> L1 grouped(8,8,4)  (+62000 B)
+                                   binding: memory
+  step 20           memory exhausted: L1 grouped(8,8,4) -> cloud only
+                                   binding: memory
+  step 21                   recovers: cloud only -> L6 grouped(8,4,4)
+                                   binding: memory
+
+========================================================================================================
+ACTIVE vs BINDING CONSTRAINTS
+========================================================================================================
+A constraint can become ACTIVE without being BINDING - it demands
+something the system is already doing. The controller compares
+OUTCOMES, not causes, so these produce no reconfiguration. A naive
+implementation reacting to 'thermal limit crossed' would reconfigure
+for nothing.
+
+  step  8      thermal limit reached: thermal active, binding = thermal, no reconfiguration
+  step 17   critical battery AND hot: thermal and battery active, binding = battery, no reconfiguration
+
+========================================================================================================
+OSCILLATION UNDER HOVERING MEMORY
+========================================================================================================
+Free memory bouncing either side of a layer-fit boundary, as real
+devices do when background processes allocate and release.
+
+  step 11  RAM 6.40GB  -> L6 grouped(8,4,4)
+  step 12  RAM 6.55GB  -> L6 grouped(8,4,4)
+  step 13  RAM 6.40GB  -> L6 grouped(8,4,4)
+  step 14  RAM 6.55GB  -> L6 grouped(8,4,4)
+
+  No thrashing: the hovering does not cross a decision boundary,
+  so the configuration holds. This does NOT prove the controller
+  is immune - it means these particular values fall on the same
+  side of the boundary.
+
+  LIMITATION EITHER WAY: the hysteresis acts on DECISIONS, not on
+  INPUTS. It suppresses a repeat of the same answer but would not
+  suppress genuine oscillation between two valid answers. A deployed
+  system would need input smoothing or a dwell time before acting.
+
+========================================================================================================
+EFFECT OF PROMPT LENGTH (7.81GB / 10Mbps / strict)
+========================================================================================================
+Length changes the transmitted SIZE but not the scheme choice -
+quality varies little with length (ratios 0.85-1.2 across a 4x
+change), so one quality table covers all lengths.
+
+  tokens  split           scheme       bytes     transfer   vs bf16
+--------------------------------------------------------------------------------------------------------
+      50     L6   grouped(8,4,4)      104462       83.6ms     25.5%
+     100     L6   grouped(8,4,4)      208912      167.1ms     25.5%
+     250     L6   grouped(8,4,4)      522262      417.8ms     25.5%
+     500     L6   grouped(8,4,4)     1044512      835.6ms     25.5%
+    1000     L6   grouped(8,4,4)     2089012     1671.2ms     25.5%
+    2000     L6   grouped(8,4,4)     4178012     3342.4ms     25.5%
+
+  At 2000 tokens, uncompressed bf16 is 16,384,000 B and takes
+  13107 ms at 10 Mbps. The controller's
+  choice is about a quarter of that.
