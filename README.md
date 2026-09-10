@@ -294,7 +294,7 @@ Measured and run on:
 pip install torch transformers numpy
 ```
 
-Versions matter more than usual here. Several APIs this code touches have
+Versions matter here. Several APIs this code touches have
 changed recently:
 
 - `model.model.rotary_emb(...)` and the `position_embeddings=` argument to a
