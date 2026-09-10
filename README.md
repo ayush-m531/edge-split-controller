@@ -275,18 +275,50 @@ data/
   orders/                per-layer channel orderings
 ```
 
-Requires `torch`, `transformers`, `numpy`, and access to
-`meta-llama/Llama-3.1-8B-Instruct` (gated on Hugging Face).
-
 ---
+
+## Requirements
+
+Measured and run on:
+
+| | |
+|---|---|
+| Python | 3.12.3 |
+| PyTorch | 2.11.0+cu128 |
+| CUDA | 12.8 |
+| transformers | 5.12.1 |
+| numpy | 2.4.4 |
+| GPU | NVIDIA A100-PCIE-40GB, driver 570.172.08 |
+
+```bash
+pip install torch transformers numpy
+```
+
+Versions matter more than usual here. Several APIs this code touches have
+changed recently:
+
+- `model.model.rotary_emb(...)` and the `position_embeddings=` argument to a
+  decoder layer — the signature differs across Transformers versions, and the
+  edge and cloud processes both call layers directly rather than going through
+  `model.forward()`
+- `torch_dtype=` is deprecated in favour of `dtype=` in transformers 5.x; the
+  code still uses the old name and emits a warning
+
+**Model access.** `meta-llama/Llama-3.1-8B-Instruct` is gated on Hugging Face.
+Accept the licence on the model page, then `hf auth login`. The weights are
+about 16 GB and download once.
+
+**GPU memory.** The cloud process holds layers 1–31 plus the head (~14 GB); the
+edge holds the embedding table plus up to 12 layers (~4–6 GB). Both fit
+together on a 40 GB card with room, but nothing else should be running.
+
+The offline pieces — `lookup_table.py` and `controller.py` — need no GPU and no
+model weights. They read the model's config only.
 
 ---
 
 ## Where the numbers come from
 
 The quality table, channel orderings and byte model are derived from the
-experiments in the companion repository:
-
-**[llm-inference-profiler](https://github.com/ayush-m531/llm-inference-profiler)**
-— activation profiling and compression sensitivity across 86,400 measurements
-on 300 texts.
+experiments in the companion repository, which profiles activation structure
+and compression sensitivity across 86,400 measurements on 300 texts.
