@@ -320,5 +320,5 @@ model weights. They read the model's config only.
 ## Where the numbers come from
 
 The quality table, channel orderings and byte model are derived from the
-experiments in the companion repository, which profiles activation structure
+experiments in the [companion repository](https://github.com/ayush-m531/llm-inference-profiler), which profiles activation structure
 and compression sensitivity across 86,400 measurements on 300 texts.
