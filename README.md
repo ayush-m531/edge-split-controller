@@ -68,10 +68,11 @@ python3 controller/controller.py       # 21-step scenario trace
 
 ## Measured results
 
-All five cases below were run end to end. "Socket bytes" is what actually
-crossed the TCP connection, not a modelled figure.
+All five cases below were run end to end. "Payload bytes" is the packed
+activation data measured on the TCP connection, not a modelled figure; the
+small JSON header sent before it is not counted.
 
-| Case | Split | Scheme | Socket bytes | % of bf16 |
+| Case | Split | Scheme | Payload bytes | % of bf16 |
 |---|---|---|---|---|
 | Normal, 7.81 GB free | L6 | grouped(8,4,4) | 25,068 | 25.5% |
 | Memory pressure, 5.90 GB | L1 | grouped(8,8,4) | 32,508 | 33.1% |
@@ -207,8 +208,8 @@ runtime.
 
 ## What is real and what is not
 
-**Real:** the layer split across two OS processes; the quantization; the bit
-packing; the byte count on the socket; the TCP transfer; the cloud unpacking
+**Real:** the layer split across two OS processes; the quantization; the bit packing; the payload byte count on the socket (JSON header not
+counted); the TCP transfer; the cloud unpacking
 and resuming from the received split index; the memory ceilings, derived from
 parameter counts; the quality table, from 300 WikiText passages.
 
