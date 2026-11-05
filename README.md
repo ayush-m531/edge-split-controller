@@ -84,6 +84,13 @@ The byte model is accurate: 25,068 measured against 25,080 predicted, a 12-byte
 gap accounted for by header scales versus the table's assumed 4 bytes per
 group.
 
+Quality differs between the cases. Across 300 WikiText passages at 256 tokens,
+the normal case (L6, grouped(8,4,4)) raises perplexity by a median 1.85%
+(p95 4.66%), memory pressure (L1, grouped(8,8,4)) by 1.11% (p95 4.54%), and the
+relaxed case (L8, grouped(4,4,4)) by 17.7% (p95 29.4%). The 33.1% scheme keeps
+the p95 rise under 1% at layers 5–11. Source: `15_ppl_check` in the companion
+repository.
+
 ### Memory pressure changes the answer
 
 The same handset, minutes apart:
@@ -112,7 +119,7 @@ aborted at       L3
 scheme re-chosen grouped(8,4,4) -> grouped(8,8,4)
 bytes            25,068 -> 32,508  (+30%)
 cloud resumed    from L4, ran 28 layers instead of 25
-output           unchanged and correct
+output           same next token (one token per request)
 ```
 
 Three things have to work for that. The split index travels with the payload,
@@ -227,6 +234,12 @@ remainder covering activations, KV cache, runtime and OS headroom. This is a
 judgement call, and the deep end of the range is sensitive to it: 0.67 gives a
 ceiling one layer shallower than 0.70.
 
+**Oracle ordering in the demo:** `edge.py` ranks channels from the live prompt
+and writes the ordering to a file the cloud reads, and the 300-passage quality
+table was measured the same way. The design ships precomputed orderings
+instead; those matched this choice of scheme in 88–94% of cases, so a deployed
+edge could lose slightly more quality. Byte counts are unaffected.
+
 ---
 
 ## Known limitations
@@ -239,6 +252,17 @@ the prefill phase.
 **Prefill only.** Decode — token-by-token generation with a KV cache — has a
 different transmission profile: many small messages rather than one large one,
 latency-bound rather than bandwidth-bound. Not modelled.
+
+**Failures are safe but not recovered.** If the cloud is down, drops the
+connection or rejects a message, the edge gets a clear typed error and stops —
+no hang (300 s socket timeout) and no wrong output. There is no retry, no
+second server, and the edge cannot finish alone because it has already dropped
+the remaining layers to save memory. A deployed system needs retries with
+backoff, a much shorter timeout for interactive use, and failover.
+
+**Raw TCP, one request at a time.** The protocol has no encryption or
+authentication, and the cloud serves one connection at a time. Production would
+carry the same binary payload over HTTPS or gRPC.
 
 **Hysteresis acts on decisions, not inputs.** It suppresses a repeat of the
 same answer but would not suppress genuine oscillation between two valid
